@@ -1,10 +1,14 @@
 package com.akashkn.radiantledger;
-import com.akashkn.radiantledger.model.Account;
+import com.akashkn.radiantledger.db.DatabaseManager;
+import java.sql.Connection;
+import java.sql.SQLException;
 
-import java.math.BigInteger;
 public class Main {
     public static void main(String[] args) {
-        Account akash = new Account("1", new BigInteger(String.valueOf(1000000)), "akash");
-        System.out.println(akash.getAccountID());
+        try (Connection conn = DatabaseManager.getConnection()) {
+            System.out.println("Connected!");
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to connect to database", e);
+        }
     }
 }

@@ -1,23 +1,19 @@
 package com.akashkn.radiantledger.model;
-import java.math.BigInteger;
+import java.math.BigDecimal;
 
 public class Account {
     private final String accountID;
     private String password;
-    private BigInteger balance;
-
-    public Account(String accountID, BigInteger balance, String password) {
+    private BigDecimal balance;
+    public Account(String accountID, BigDecimal balance, String password) {
         this.accountID = accountID;
         this.balance = balance;
         this.password = password;
     }
-
     public String getAccountID() {
         return accountID;
     }
-
-    public BigInteger getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
-
 }
