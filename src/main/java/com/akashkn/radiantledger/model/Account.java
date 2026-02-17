@@ -3,17 +3,24 @@ import java.math.BigDecimal;
 
 public class Account {
     private final String accountID;
-    private String password;
+    private String passwordHash;
     private BigDecimal balance;
-    public Account(String accountID, BigDecimal balance, String password) {
+    public Account(String accountID, BigDecimal balance, String passwordHash) {
         this.accountID = accountID;
         this.balance = balance;
-        this.password = password;
+        this.passwordHash = passwordHash;
     }
     public String getAccountID() {
         return accountID;
     }
     public BigDecimal getBalance() {
         return balance;
+    }
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
+    }
+    public void setPassword(String passwordHash)
+    {
+        this.passwordHash = passwordHash;
     }
 }
