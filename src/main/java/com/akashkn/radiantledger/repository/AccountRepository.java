@@ -14,7 +14,7 @@ public class AccountRepository {
         this.db = db;
     }
 
-    public void save(Account account) throws SQLException {
+    public void save(Account account) {
         //language=PostgreSQL
         String sql = "INSERT INTO account (accountid, password_hash, balance) VALUES (?, ?, ?)";
 
