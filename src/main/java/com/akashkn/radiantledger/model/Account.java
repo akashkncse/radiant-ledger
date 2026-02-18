@@ -16,6 +16,11 @@ public class Account {
     public BigDecimal getBalance() {
         return balance;
     }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
     public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
