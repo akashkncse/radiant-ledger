@@ -3,7 +3,6 @@ package com.akashkn.radiantledger.repository;
 import com.akashkn.radiantledger.db.DatabaseManager;
 import com.akashkn.radiantledger.model.Account;
 
-import javax.swing.text.html.Option;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -34,7 +33,9 @@ public class AccountRepository {
     }
 
     private Account mapRowToAccount(ResultSet rs) throws SQLException {
-        Account ac = new Account(rs.getString("accountID"), new BigDecimal(rs.getString("balance")), rs.getString("password_hash"));
+        Account ac = new Account(rs.getString("accountID"),
+                new BigDecimal(rs.getString("balance")),
+                rs.getString("password_hash"));
         return ac;
     }
 
