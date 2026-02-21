@@ -19,7 +19,7 @@ public class AccountRepository {
 
     public void save(Account account) {
         //language=PostgreSQL
-        String sql = "INSERT INTO account (accountid, passwordHash, balance) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO account (accountid, \"passwordHash\", balance) VALUES (?, ?, ?)";
         try (Connection conn = db.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
