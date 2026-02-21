@@ -19,7 +19,7 @@ public class AccountRepository {
 
     public void save(Account account) {
         //language=PostgreSQL
-        String sql = "INSERT INTO account (accountid, password_hash, balance) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO account (accountid, passwordHash, balance) VALUES (?, ?, ?)";
         try (Connection conn = db.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -35,7 +35,7 @@ public class AccountRepository {
     private Account mapRowToAccount(ResultSet rs) throws SQLException {
         Account ac = new Account(rs.getString("accountID"),
                 new BigDecimal(rs.getString("balance")),
-                rs.getString("password_hash"));
+                rs.getString("passwordHash"));
         return ac;
     }
 
