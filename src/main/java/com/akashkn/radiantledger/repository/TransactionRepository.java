@@ -1,0 +1,78 @@
+package com.akashkn.radiantledger.repository;
+
+import com.akashkn.radiantledger.db.DatabaseManager;
+import com.akashkn.radiantledger.model.Transaction;
+
+import javax.xml.transform.Result;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class TransactionRepository {
+    private final DatabaseManager db;
+    public TransactionRepository(DatabaseManager db)
+    {
+        this.db = db;
+    }
+
+    public void save(Transaction tx)
+    {
+        //language=PostgreSQL
+        String sql = "INSERT INTO transaction " +
+                "(transactionid, fromaccountid, toaccountid," +
+                " amount, type, timestamp) " +
+                "values (?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = db.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, tx.getTransactionID());
+            pstmt.setString(2, tx.getFromAccountID());
+            pstmt.setString(3, tx.getToAccountID());
+            pstmt.setBigDecimal(4, tx.getAmount());
+            pstmt.setString(5, tx.getType().name());
+            pstmt.setObject(6, tx.getTimestamp());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private Transaction mapRowToTransaction(ResultSet rs) throws SQLException{
+        Transaction tx = new Transaction(rs.getString("transactionID"),
+                rs.getString("fromaccountid"),
+                rs.getBigDecimal("amount"),
+                Transaction.TransactionType.valueOf(rs.getString("type")),
+                rs.getString("toaccountid"),
+                rs.getTimestamp("timestamp").toLocalDateTime());
+        return tx;
+    }
+
+    public List<Transaction> findByAccountID(String accountID)
+    {
+        List<Transaction> transactions = new ArrayList<Transaction>();
+
+        //language=PostgreSQL
+        String sql = "SELECT * FROM transaction " +
+                "WHERE fromaccountid = ? OR toaccountid = ? " +
+                "ORDER BY timestamp DESC";
+
+        try (Connection conn = db.getConnection();
+        PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, accountID);
+            pstmt.setString(2, accountID);
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next())
+            {
+                Transaction tx = mapRowToTransaction(rs);
+                transactions.add(tx);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return transactions;
+    }
+}
