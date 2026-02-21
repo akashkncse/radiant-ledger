@@ -4,13 +4,18 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class Transaction {
+    public enum TransactionType {
+        DEPOSIT,
+        WITHDRAWAL,
+        TRANSFER
+    }
     private final String transactionID;
     private final String fromAccountID;
     private final BigDecimal amount;
-    private final String type;
+    private final TransactionType type;
     private final String toAccountID;
     private final LocalDateTime timestamp;
-    public Transaction(String transactionID, String fromAccountID, BigDecimal amount, String type, String toAccountID, LocalDateTime timestamp) {
+    public Transaction(String transactionID, String fromAccountID, BigDecimal amount, TransactionType type, String toAccountID, LocalDateTime timestamp) {
         this.transactionID = transactionID;
         this.fromAccountID = fromAccountID;
         this.toAccountID = toAccountID;
@@ -31,7 +36,7 @@ public class Transaction {
         return amount;
     }
 
-    public String getType() {
+    public TransactionType getType() {
         return type;
     }
 
