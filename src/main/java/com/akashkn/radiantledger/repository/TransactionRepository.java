@@ -22,7 +22,7 @@ public class TransactionRepository {
     {
         //language=PostgreSQL
         String sql = "INSERT INTO transaction " +
-                "(transactionid, fromaccountid, toaccountid," +
+                "(transaction_id, from_account_id, to_account_id," +
                 " amount, type, timestamp) " +
                 "values (?, ?, ?, ?, ?, ?)";
 
@@ -41,11 +41,11 @@ public class TransactionRepository {
     }
 
     private Transaction mapRowToTransaction(ResultSet rs) throws SQLException{
-        Transaction tx = new Transaction(rs.getString("transactionID"),
-                rs.getString("fromaccountid"),
+        Transaction tx = new Transaction(rs.getString("transaction_id"),
+                rs.getString("from_account_id"),
                 rs.getBigDecimal("amount"),
                 Transaction.TransactionType.valueOf(rs.getString("type")),
-                rs.getString("toaccountid"),
+                rs.getString("to_account_id"),
                 rs.getTimestamp("timestamp").toLocalDateTime());
         return tx;
     }
@@ -56,7 +56,7 @@ public class TransactionRepository {
 
         //language=PostgreSQL
         String sql = "SELECT * FROM transaction " +
-                "WHERE fromaccountid = ? OR toaccountid = ? " +
+                "WHERE from_account_id = ? OR to_account_id = ? " +
                 "ORDER BY timestamp DESC";
 
         try (Connection conn = db.getConnection();

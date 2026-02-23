@@ -19,7 +19,7 @@ public class AccountRepository {
 
     public void save(Account account) {
         //language=PostgreSQL
-        String sql = "INSERT INTO account (accountid, \"passwordHash\", balance) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO account (account_id, password_hash, balance) VALUES (?, ?, ?)";
         try (Connection conn = db.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -33,15 +33,15 @@ public class AccountRepository {
     }
 
     private Account mapRowToAccount(ResultSet rs) throws SQLException {
-        Account ac = new Account(rs.getString("accountID"),
+        Account ac = new Account(rs.getString("account_id"),
                 new BigDecimal(rs.getString("balance")),
-                rs.getString("passwordHash"));
+                rs.getString("password_hash"));
         return ac;
     }
 
     public Optional<Account> findByID(String accountID) {
         //language=PostgreSQL
-        String sql = "SELECT * FROM account WHERE accountID = ?";
+        String sql = "SELECT * FROM account WHERE account_id = ?";
         try (Connection conn = db.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
