@@ -46,8 +46,8 @@ class AccountRepositoryTest {
     @Test
     void testFindByID()
     {
-        accountRepository.save(new Account("A1", new BigDecimal("10.23"), "lsdjf"));
-        accountRepository.save(new Account("B2", new BigDecimal("12.23"), "dsfsdfsdf"));
+        accountRepository.save(new Account("A1", "lsdjf"));
+        accountRepository.save(new Account("B2", "dsfsdfsdf"));
 
         Optional<Account> acc = accountRepository.findByID("B2");
         assertEquals("B2", acc.get().getAccountID());

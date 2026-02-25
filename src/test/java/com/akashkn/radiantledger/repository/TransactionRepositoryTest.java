@@ -50,8 +50,8 @@ class TransactionRepositoryTest {
     @Test
     void testFindTxByAccountID()
     {
-        accountRepository.save(new Account("ac1", new BigDecimal("10.23"), "lsdjf"));
-        accountRepository.save(new Account("ac2", new BigDecimal("12.23"), "dsfsdfsdf"));
+        accountRepository.save(new Account("ac1", "lsdjf"));
+        accountRepository.save(new Account("ac2", "dsfsdfsdf"));
 
         Transaction tx1 = new Transaction("tx1", "ac1", new BigDecimal("10.23"), Transaction.TransactionType.DEPOSIT, "ac2", LocalDateTime.now());
         Transaction tx2 = new Transaction("tx2", "ac2", new BigDecimal("10.23"), Transaction.TransactionType.DEPOSIT, "ac1", LocalDateTime.now());

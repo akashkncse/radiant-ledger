@@ -1,7 +1,6 @@
 CREATE TABLE IF NOT EXISTS account (
     account_id varchar(255) PRIMARY KEY,
-    password_hash varchar(255) not null,
-    balance numeric(18, 2) not null default 0.00
+    password_hash varchar(255) not null
 );
 
 CREATE TABLE IF NOT EXISTS transaction (
@@ -11,4 +10,4 @@ CREATE TABLE IF NOT EXISTS transaction (
     amount numeric(18, 2) not null default 0.00,
     type varchar(255) not null,
     timestamp timestamp default current_timestamp
-)
+);
