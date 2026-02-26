@@ -1,23 +1,22 @@
-package com.akashkn.radiantledger.repository;
+package com.akashkn.radiantledger.service;
 
 import com.akashkn.radiantledger.db.DatabaseManager;
-import com.akashkn.radiantledger.model.Account;
+import com.akashkn.radiantledger.dto.AccountRegistrationRequest;
+import com.akashkn.radiantledger.repository.AccountRepository;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.PostgreSQLContainer;
 
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
 
-class AccountRepositoryTest {
-
+class AccountServiceTest {
     static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16-alpine").withInitScript("db/schema.sql");
 
     AccountRepository accountRepository;
-
+    AccountService accountService;
+    PasswordService passwordService = new PasswordService();
     @BeforeAll
     static void beforeAll() {
         postgres.start();
@@ -37,16 +36,14 @@ class AccountRepositoryTest {
                 postgres.getPassword()
         );
         accountRepository = new AccountRepository(db);
+        accountService = new AccountService(accountRepository, passwordService);
     }
 
     @Test
-    void testFindById()
+    void testCreateAccount()
     {
-        accountRepository.save(new Account("A1", "lsdjf"));
-        accountRepository.save(new Account("B2", "dsfsdfsdf"));
-
-        Optional<Account> acc = accountRepository.findById("B2");
-        assertEquals("B2", acc.get().getAccountId());
+        AccountRegistrationRequest request = new AccountRegistrationRequest("akash@supersecretwebsite.com", "hiiamakash");
+        accountService.createAccount(request);
+        assertEquals(accountRepository.findById("akash@supersecretwebsite.com").get().getAccountId(), "akash@supersecretwebsite.com");
     }
-
 }

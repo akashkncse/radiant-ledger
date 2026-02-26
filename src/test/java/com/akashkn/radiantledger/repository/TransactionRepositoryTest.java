@@ -48,7 +48,7 @@ class TransactionRepositoryTest {
     }
 
     @Test
-    void testFindTxByAccountID()
+    void testFindTxByAccountId()
     {
         accountRepository.save(new Account("ac1", "lsdjf"));
         accountRepository.save(new Account("ac2", "dsfsdfsdf"));
@@ -59,9 +59,9 @@ class TransactionRepositoryTest {
         transactionRepository.save(tx1);
         transactionRepository.save(tx2);
 
-        List<Transaction> result = transactionRepository.findByAccountID("ac1");
-        assertEquals(result.get(0).getTransactionID(), tx1.getTransactionID());
-        assertEquals(result.get(1).getTransactionID(), tx2.getTransactionID());
+        List<Transaction> result = transactionRepository.findByAccountId("ac1");
+        assertEquals(result.get(0).getTransactionId(), tx1.getTransactionId());
+        assertEquals(result.get(1).getTransactionId(), tx2.getTransactionId());
     }
 
 

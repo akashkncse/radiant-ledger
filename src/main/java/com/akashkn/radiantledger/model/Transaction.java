@@ -9,27 +9,27 @@ public class Transaction {
         WITHDRAWAL,
         TRANSFER
     }
-    private final String transactionID;
-    private final String fromAccountID;
+    private final String transactionId;
+    private final String fromAccountId;
     private final BigDecimal amount;
     private final TransactionType type;
-    private final String toAccountID;
+    private final String toAccountId;
     private final LocalDateTime timestamp;
-    public Transaction(String transactionID, String fromAccountID, BigDecimal amount, TransactionType type, String toAccountID, LocalDateTime timestamp) {
-        this.transactionID = transactionID;
-        this.fromAccountID = fromAccountID;
-        this.toAccountID = toAccountID;
+    public Transaction(String transactionId, String fromAccountId, BigDecimal amount, TransactionType type, String toAccountId, LocalDateTime timestamp) {
+        this.transactionId = transactionId;
+        this.fromAccountId = fromAccountId;
+        this.toAccountId = toAccountId;
         this.amount = amount;
         this.type = type;
         this.timestamp = timestamp;
     }
 
-    public String getTransactionID() {
-        return transactionID;
+    public String getTransactionId() {
+        return transactionId;
     }
 
-    public String getFromAccountID() {
-        return fromAccountID;
+    public String getFromAccountId() {
+        return fromAccountId;
     }
 
     public BigDecimal getAmount() {
@@ -40,8 +40,8 @@ public class Transaction {
         return type;
     }
 
-    public String getToAccountID() {
-        return toAccountID;
+    public String getToAccountId() {
+        return toAccountId;
     }
 
     public LocalDateTime getTimestamp() {

@@ -2,14 +2,14 @@ package com.akashkn.radiantledger.model;
 import java.math.BigDecimal;
 
 public class Account {
-    private final String accountID;
+    private final String accountId;
     private String passwordHash;
-    public Account(String accountID, String passwordHash) {
-        this.accountID = accountID;
+    public Account(String accountId, String passwordHash) {
+        this.accountId = accountId;
         this.passwordHash = passwordHash;
     }
-    public String getAccountID() {
-        return accountID;
+    public String getAccountId() {
+        return accountId;
     }
 
 

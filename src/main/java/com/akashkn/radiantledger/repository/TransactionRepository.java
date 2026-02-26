@@ -28,9 +28,9 @@ public class TransactionRepository {
 
         try (Connection conn = db.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, tx.getTransactionID());
-            pstmt.setString(2, tx.getFromAccountID());
-            pstmt.setString(3, tx.getToAccountID());
+            pstmt.setString(1, tx.getTransactionId());
+            pstmt.setString(2, tx.getFromAccountId());
+            pstmt.setString(3, tx.getToAccountId());
             pstmt.setBigDecimal(4, tx.getAmount());
             pstmt.setString(5, tx.getType().name());
             pstmt.setObject(6, tx.getTimestamp());
@@ -50,7 +50,7 @@ public class TransactionRepository {
         return tx;
     }
 
-    public List<Transaction> findByAccountID(String accountID)
+    public List<Transaction> findByAccountId(String accountId)
     {
         List<Transaction> transactions = new ArrayList<Transaction>();
 
@@ -61,8 +61,8 @@ public class TransactionRepository {
 
         try (Connection conn = db.getConnection();
         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, accountID);
-            pstmt.setString(2, accountID);
+            pstmt.setString(1, accountId);
+            pstmt.setString(2, accountId);
             ResultSet rs = pstmt.executeQuery();
 
             while (rs.next())

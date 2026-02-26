@@ -13,7 +13,7 @@ class AccountTest {
 
         Account account = new Account(id, pw_hash);
 
-        assertEquals(id, account.getAccountID());
+        assertEquals(id, account.getAccountId());
         assertEquals(pw_hash, account.getPasswordHash());
     }
 

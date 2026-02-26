@@ -23,7 +23,7 @@ public class AccountRepository {
         try (Connection conn = db.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, account.getAccountID());
+            pstmt.setString(1, account.getAccountId());
             pstmt.setString(2, account.getPasswordHash());
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -37,13 +37,13 @@ public class AccountRepository {
         return ac;
     }
 
-    public Optional<Account> findByID(String accountID) {
+    public Optional<Account> findById(String accountId) {
         //language=PostgreSQL
         String sql = "SELECT * FROM account WHERE account_id = ?";
         try (Connection conn = db.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-            pstmt.setString(1, accountID);
+            pstmt.setString(1, accountId);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     return Optional.of(mapRowToAccount(rs));
