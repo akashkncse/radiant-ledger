@@ -23,7 +23,7 @@ public class TransactionRepository {
         //language=PostgreSQL
         String sql = "INSERT INTO transaction " +
                 "(transaction_id, from_account_id, to_account_id," +
-                " amount, type, timestamp) " +
+                " amount, timestamp) " +
                 "values (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = db.getConnection();
@@ -32,7 +32,6 @@ public class TransactionRepository {
             pstmt.setString(2, tx.getFromAccountId());
             pstmt.setString(3, tx.getToAccountId());
             pstmt.setBigDecimal(4, tx.getAmount());
-            pstmt.setString(5, tx.getType().name());
             pstmt.setObject(6, tx.getTimestamp());
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -44,7 +43,6 @@ public class TransactionRepository {
         Transaction tx = new Transaction(rs.getString("transaction_id"),
                 rs.getString("from_account_id"),
                 rs.getBigDecimal("amount"),
-                Transaction.TransactionType.valueOf(rs.getString("type")),
                 rs.getString("to_account_id"),
                 rs.getTimestamp("timestamp").toLocalDateTime());
         return tx;

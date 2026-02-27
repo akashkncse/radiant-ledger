@@ -17,10 +17,10 @@ public class AccountService {
     }
     public void createAccount(AccountRegistrationRequest request) {
         // validate accountId;
-        if (!EmailValidator.getInstance().isValid(request.getEmail())) throw new InvalidEmailException("Email not valid!");
+        if (!EmailValidator.getInstance().isValid(request.getEmail()))
+            throw new InvalidEmailException("Email not valid!");
         if (repo.findById(request.getEmail()).isPresent()) throw new RuntimeException("Account already exists!");
         Account ac = new Account(request.getEmail(), ps.hashPassword(request.getPassword()));
         repo.save(ac);
     }
-
 }

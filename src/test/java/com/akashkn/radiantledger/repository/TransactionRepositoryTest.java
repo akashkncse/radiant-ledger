@@ -53,8 +53,8 @@ class TransactionRepositoryTest {
         accountRepository.save(new Account("ac1", "lsdjf"));
         accountRepository.save(new Account("ac2", "dsfsdfsdf"));
 
-        Transaction tx1 = new Transaction("tx1", "ac1", new BigDecimal("10.23"), Transaction.TransactionType.DEPOSIT, "ac2", LocalDateTime.now());
-        Transaction tx2 = new Transaction("tx2", "ac2", new BigDecimal("10.23"), Transaction.TransactionType.DEPOSIT, "ac1", LocalDateTime.now());
+        Transaction tx1 = new Transaction("tx1", "ac1", new BigDecimal("10.23"),  "ac2", LocalDateTime.now());
+        Transaction tx2 = new Transaction("tx2", "ac2", new BigDecimal("10.23"),  "ac1", LocalDateTime.now());
 
         transactionRepository.save(tx1);
         transactionRepository.save(tx2);
