@@ -24,7 +24,7 @@ public class TransactionRepository {
         String sql = "INSERT INTO transaction " +
                 "(transaction_id, from_account_id, to_account_id," +
                 " amount, timestamp) " +
-                "values (?, ?, ?, ?, ?, ?)";
+                "values (?, ?, ?, ?, ?)";
 
         try (Connection conn = db.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
