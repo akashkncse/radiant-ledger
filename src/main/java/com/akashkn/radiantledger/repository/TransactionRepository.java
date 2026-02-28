@@ -4,6 +4,7 @@ import com.akashkn.radiantledger.db.DatabaseManager;
 import com.akashkn.radiantledger.model.Transaction;
 
 import javax.xml.transform.Result;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -39,7 +40,7 @@ public class TransactionRepository {
         }
     }
 
-    private Transaction mapRowToTransaction(ResultSet rs) throws SQLException{
+    private Transaction mapRowToTransaction(ResultSet rs) throws SQLException {
         Transaction tx = new Transaction(rs.getString("transaction_id"),
                 rs.getString("from_account_id"),
                 rs.getBigDecimal("amount"),
@@ -48,8 +49,7 @@ public class TransactionRepository {
         return tx;
     }
 
-    public List<Transaction> findByAccountId(String accountId)
-    {
+    public List<Transaction> findByAccountId(String accountId) {
         List<Transaction> transactions = new ArrayList<Transaction>();
 
         //language=PostgreSQL
@@ -72,5 +72,34 @@ public class TransactionRepository {
             throw new RuntimeException(e);
         }
         return transactions;
+    }
+
+    public BigDecimal getBalance(String accountId) {
+        BigDecimal balance = null;
+        //language=PostgreSQL
+        String sql = """
+            SELECT COALESCE(SUM(
+                            CASE
+                                WHEN transaction.from_account_id = ? THEN -amount
+                                WHEN transaction.to_account_id = ? THEN amount
+                                ELSE 0
+                            END
+            ), 0) AS balance
+            FROM transaction
+            WHERE from_account_id = ? OR to_account_id = ?
+            """;
+        try (Connection conn = db.getConnection();
+        PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, accountId);
+            ps.setString(2, accountId);
+            ps.setString(3, accountId);
+            ps.setString(4, accountId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next())
+            balance = rs.getBigDecimal("balance");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return balance;
     }
 }
