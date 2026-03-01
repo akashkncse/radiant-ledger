@@ -3,7 +3,6 @@ package com.akashkn.radiantledger.repository;
 import com.akashkn.radiantledger.db.DatabaseManager;
 import com.akashkn.radiantledger.model.Transaction;
 
-import javax.xml.transform.Result;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,7 +32,7 @@ public class TransactionRepository {
             pstmt.setString(2, tx.getFromAccountId());
             pstmt.setString(3, tx.getToAccountId());
             pstmt.setBigDecimal(4, tx.getAmount());
-            pstmt.setObject(6, tx.getTimestamp());
+            pstmt.setObject(5, tx.getTimestamp());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -41,12 +40,11 @@ public class TransactionRepository {
     }
 
     private Transaction mapRowToTransaction(ResultSet rs) throws SQLException {
-        Transaction tx = new Transaction(rs.getString("transaction_id"),
+        return new Transaction(rs.getString("transaction_id"),
                 rs.getString("from_account_id"),
                 rs.getBigDecimal("amount"),
                 rs.getString("to_account_id"),
                 rs.getTimestamp("timestamp").toLocalDateTime());
-        return tx;
     }
 
     public List<Transaction> findByAccountId(String accountId) {
@@ -95,8 +93,9 @@ public class TransactionRepository {
             ps.setString(3, accountId);
             ps.setString(4, accountId);
             ResultSet rs = ps.executeQuery();
-            if (rs.next())
-            balance = rs.getBigDecimal("balance");
+            if (rs.next()) {
+                balance = rs.getBigDecimal("balance");
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

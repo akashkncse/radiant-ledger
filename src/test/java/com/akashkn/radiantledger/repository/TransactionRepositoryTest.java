@@ -43,6 +43,13 @@ class TransactionRepositoryTest {
                 postgres.getUsername(),
                 postgres.getPassword()
         );
+        try (var conn = db.getConnection()) {
+            var stmt = conn.createStatement();
+            stmt.execute("TRUNCATE TABLE transaction");
+            stmt.execute("TRUNCATE TABLE account");
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to clean database ", e);
+        }
         transactionRepository = new TransactionRepository(db);
         accountRepository = new AccountRepository(db);
     }
@@ -60,9 +67,22 @@ class TransactionRepositoryTest {
         transactionRepository.save(tx2);
 
         List<Transaction> result = transactionRepository.findByAccountId("ac1");
-        assertEquals(result.get(0).getTransactionId(), tx1.getTransactionId());
+        assertEquals(result.get(0).getTransactionId(), tx1.getTransactionId ());
         assertEquals(result.get(1).getTransactionId(), tx2.getTransactionId());
     }
 
+    @Test
+    void testGetBalance()
+    {
+        accountRepository.save(new Account("ac1", "lsdjf"));
+        accountRepository.save(new Account("ac2", "dsfsdfsdf"));
+
+        Transaction tx1 = new Transaction("tx1", "ac1", new BigDecimal("23.00"),  "ac2", LocalDateTime.now());
+        Transaction tx2 = new Transaction("tx2", "ac2", new BigDecimal("14.53"),  "ac1", LocalDateTime.now());
+
+        transactionRepository.save(tx1);
+        transactionRepository.save(tx2);
+        assertEquals(transactionRepository.getBalance("ac2"), new BigDecimal("8.47"));
+    }
 
 }
