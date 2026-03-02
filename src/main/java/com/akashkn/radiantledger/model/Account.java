@@ -1,5 +1,4 @@
 package com.akashkn.radiantledger.model;
-import java.math.BigDecimal;
 
 public class Account {
     private final String accountId;

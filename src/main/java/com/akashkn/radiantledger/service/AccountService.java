@@ -6,7 +6,6 @@ import com.akashkn.radiantledger.model.Account;
 import org.apache.commons.validator.EmailValidator;
 import com.akashkn.radiantledger.repository.AccountRepository;
 
-import java.util.Optional;
 
 public class AccountService {
     private final AccountRepository repo;
