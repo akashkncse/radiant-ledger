@@ -1,12 +1,22 @@
 CREATE TABLE IF NOT EXISTS account (
-    account_id varchar(255) PRIMARY KEY,
-    password_hash varchar(255) not null
+    account_id SERIAL PRIMARY KEY,
+    metadata JSONB
 );
 
-CREATE TABLE IF NOT EXISTS transaction (
-    transaction_id varchar(255) PRIMARY KEY,
-    from_account_id varchar(255) not null,
-    to_account_id varchar(255) not null,
-    amount numeric(18, 2) not null default 0.00,
-    timestamp timestamp default current_timestamp
+CREATE TABLE IF NOT EXISTS journal (
+    journal_id SERIAL PRIMARY KEY,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    description TEXT,
+    metadata JSONB
 );
+
+CREATE TABLE IF NOT EXISTS entry (
+    entry_id SERIAL PRIMARY KEY,
+    account_id INT NOT NULL REFERENCES account(account_id),
+    journal_id INT NOT NULL REFERENCES journal(journal_id),
+    amount NUMERIC(19, 4) NOT NULL,
+    asset_code VARCHAR(10) NOT NULL,
+    metadata JSONB
+);
+
+CREATE INDEX index_entry_account_asset ON entry(account_id, asset_code);
