@@ -1,7 +1,6 @@
 package com.akashkn.radiantledger.repository;
 
 import com.akashkn.radiantledger.db.DatabaseManager;
-import com.akashkn.radiantledger.model.Transaction;
 
 import java.math.BigDecimal;
 import java.sql.Connection;

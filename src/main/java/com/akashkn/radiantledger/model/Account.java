@@ -1,24 +1,25 @@
 package com.akashkn.radiantledger.model;
 
+import java.util.Map;
+
 public class Account {
-    private final String accountId;
-    private String passwordHash;
-    public Account(String accountId, String passwordHash) {
+    private long accountId;
+    private Map<String, Object> metadata;
+    public Account(long accountId,
+                   Map<String, Object> metadata) {
         this.accountId = accountId;
-        this.passwordHash = passwordHash;
+        this.metadata = metadata;
     }
-    public String getAccountId() {
+    public Account(Map<String, Object> metadata) {
+        this.metadata = metadata;
+    }
+    public long getAccountId() {
         return accountId;
     }
-
-
-    public String getPasswordHash() {
-        return passwordHash;
+    public Map<String, Object> getMetadata() {
+        return metadata;
     }
-
-
-    public void setPassword(String passwordHash)
-    {
-        this.passwordHash = passwordHash;
+    public void setMetadata(Map<String, Object> metadata) {
+        this.metadata = metadata;
     }
 }

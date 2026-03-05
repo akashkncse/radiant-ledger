@@ -2,7 +2,6 @@ package com.akashkn.radiantledger.service;
 
 import com.akashkn.radiantledger.dto.TransferRequest;
 import com.akashkn.radiantledger.exception.InsufficientFundsException;
-import com.akashkn.radiantledger.model.Transaction;
 import com.akashkn.radiantledger.repository.TransactionRepository;
 
 import java.math.BigDecimal;

@@ -2,7 +2,6 @@ package com.akashkn.radiantledger.repository;
 
 import com.akashkn.radiantledger.db.DatabaseManager;
 import com.akashkn.radiantledger.model.Account;
-import com.akashkn.radiantledger.model.Transaction;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;

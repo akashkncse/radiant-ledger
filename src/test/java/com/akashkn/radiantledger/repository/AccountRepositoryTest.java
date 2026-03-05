@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.containers.PostgreSQLContainer;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -42,6 +44,9 @@ class AccountRepositoryTest {
     @Test
     void testFindById()
     {
+        Map<String, Object> meta = new HashMap<>();
+        meta.put("name", "akash");
+
         accountRepository.save(new Account("A1", "lsdjf"));
         accountRepository.save(new Account("B2", "dsfsdfsdf"));
 
